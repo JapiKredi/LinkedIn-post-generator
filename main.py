@@ -1,4 +1,4 @@
-from ui.streamlit_app import StreamlitUI
+from UI.streamlit_app import StreamlitUI
 
 
 def main():

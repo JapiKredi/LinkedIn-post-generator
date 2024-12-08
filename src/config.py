@@ -1,15 +1,27 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
-MODEL_PATH = "path/to/your/llama-2-7b.gguf"  # Update with your model path
+
+# Hugging Face settings
+HF_TOKEN = os.getenv("HUGGING_FACE_TOKEN")
+MODEL_ID = "meta-llama/Llama-2-70b-chat-hf"
 
 # Model settings
-MODEL_CONFIG = {"n_ctx": 2048, "n_threads": 4, "temperature": 0.7, "max_tokens": 500}
+MODEL_CONFIG = {
+    "temperature": 0.7,
+    "max_length": 500,
+    "top_p": 0.95,
+    "top_k": 50,
+    "repetition_penalty": 1.1,
+}
 
 # Prompt template
-BLOG_GENERATION_PROMPT = """Based on the following LinkedIn tech blog topics, generate a new, unique LinkedIn blog post about AI or technology:
+BLOG_GENERATION_PROMPT = """<s>[INST] Based on the following LinkedIn tech blog topics, generate a new, unique LinkedIn blog post about AI or technology:
 
 Topics:
 - Model Context Protocol
@@ -22,5 +34,4 @@ Generate a professional LinkedIn post with:
 2. Main content
 3. Relevant hashtags
 
-Post:
-"""
+Your response should be well-structured and professional. [/INST]"""
